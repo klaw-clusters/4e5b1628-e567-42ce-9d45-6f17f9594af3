@@ -53,7 +53,21 @@
                 "replicas": 1,
                 "engineResources": {},
                 "svcOrchSpec": {},
-                "traffic": 100
+                "traffic": 100,
+                "explainer": {
+                    "type": "AnchorTabular",
+                    "modelUri": "gs://seldon-models/sklearn/iris-0.23.2/anchor/explainer.dill",
+                    "containerSpec": {
+                        "name": "",
+                        "resources": {}
+                    },
+                    "config": {
+                        "batch_size": "100",
+                        "delta": "0.1",
+                        "tau": "0.15",
+                        "threshold": "0.95"
+                    }
+                }
             }
         ],
         "annotations": {
