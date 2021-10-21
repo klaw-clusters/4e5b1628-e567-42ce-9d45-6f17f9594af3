@@ -28,7 +28,7 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-10-21T20:40:02Z"
+                            "creationTimestamp": "2021-10-21T21:22:47Z"
                         },
                         "spec": {
                             "containers": [
@@ -52,7 +52,34 @@
                 "replicas": 1,
                 "engineResources": {},
                 "svcOrchSpec": {},
-                "traffic": 100
+                "traffic": 60
+            },
+            {
+                "name": "canary",
+                "graph": {
+                    "name": "john-smith-xgb-container",
+                    "implementation": "XGBOOST_SERVER",
+                    "modelUri": "gs://tom-seldon-examples/deploy-workshop/john-smith/xgb"
+                },
+                "componentSpecs": [
+                    {
+                        "metadata": {
+                            "creationTimestamp": "2021-10-21T21:22:47Z"
+                        },
+                        "spec": {
+                            "containers": [
+                                {
+                                    "name": "john-smith-xgb-container",
+                                    "resources": {}
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "replicas": 1,
+                "engineResources": {},
+                "svcOrchSpec": {},
+                "traffic": 40
             }
         ],
         "annotations": {
