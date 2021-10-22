@@ -43,7 +43,7 @@
                             "--protocol",
                             "tensorflow.http",
                             "--storage_uri",
-                            "noitso/models/generic/2021/application-b2c/cd",
+                            "gs://noitso/models/generic/2021/application-b2c/cd",
                             "--reply_url",
                             "http://seldon-request-logger.seldon-logs",
                             "--event_type",
