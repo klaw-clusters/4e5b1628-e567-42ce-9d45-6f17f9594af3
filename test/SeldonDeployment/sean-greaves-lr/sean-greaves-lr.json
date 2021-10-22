@@ -28,7 +28,7 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-10-22T08:23:28Z"
+                            "creationTimestamp": "2021-10-22T08:27:57Z"
                         },
                         "spec": {
                             "containers": [
@@ -52,7 +52,34 @@
                 "replicas": 1,
                 "engineResources": {},
                 "svcOrchSpec": {},
-                "traffic": 100
+                "traffic": 60
+            },
+            {
+                "name": "canary",
+                "graph": {
+                    "name": "sean-greaves-xgb-container",
+                    "implementation": "XGBOOST_SERVER",
+                    "modelUri": "gs://tom-seldon-examples/deploy-workshop/sean-greaves/xgb"
+                },
+                "componentSpecs": [
+                    {
+                        "metadata": {
+                            "creationTimestamp": "2021-10-22T08:27:57Z"
+                        },
+                        "spec": {
+                            "containers": [
+                                {
+                                    "name": "sean-greaves-xgb-container",
+                                    "resources": {}
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "replicas": 1,
+                "engineResources": {},
+                "svcOrchSpec": {},
+                "traffic": 40
             }
         ],
         "annotations": {
