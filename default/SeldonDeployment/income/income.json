@@ -28,7 +28,7 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-10-26T15:21:13Z"
+                            "creationTimestamp": "2021-10-26T15:27:31Z"
                         },
                         "spec": {
                             "containers": [
@@ -52,15 +52,15 @@
                 "replicas": 1,
                 "engineResources": {},
                 "svcOrchSpec": {},
-                "traffic": 100
-            },
-            {
-                "name": "",
-                "graph": {
-                    "name": ""
-                },
-                "engineResources": {},
-                "svcOrchSpec": {}
+                "traffic": 100,
+                "explainer": {
+                    "type": "AnchorTabular",
+                    "modelUri": "s3://models/explainer",
+                    "containerSpec": {
+                        "name": "",
+                        "resources": {}
+                    }
+                }
             }
         ],
         "annotations": {
