@@ -28,7 +28,7 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-10-26T15:34:58Z"
+                            "creationTimestamp": "2021-10-26T15:43:26Z"
                         },
                         "spec": {
                             "containers": [
@@ -60,7 +60,7 @@
                         "name": "",
                         "resources": {}
                     },
-                    "envSecretRefName": "seldon-job-secret"
+                    "envSecretRefName": "seldon-rclone-secret"
                 }
             }
         ],
