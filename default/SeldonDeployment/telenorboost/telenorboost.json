@@ -1,0 +1,67 @@
+{
+    "kind": "SeldonDeployment",
+    "apiVersion": "machinelearning.seldon.io/v1",
+    "metadata": {
+        "name": "telenorboost",
+        "namespace": "default",
+        "creationTimestamp": null,
+        "labels": {
+            "fluentd": "true"
+        }
+    },
+    "spec": {
+        "name": "telenorboost",
+        "predictors": [
+            {
+                "name": "default",
+                "graph": {
+                    "name": "input-transformer",
+                    "children": [
+                        {
+                            "name": "telenorboost-container",
+                            "implementation": "XGBOOST_SERVER",
+                            "modelUri": "gs://noitso/models/telenor/application-private/2021/model",
+                            "logger": {
+                                "mode": "all"
+                            }
+                        }
+                    ],
+                    "type": "TRANSFORMER"
+                },
+                "componentSpecs": [
+                    {
+                        "metadata": {
+                            "creationTimestamp": "2021-10-28T13:17:48Z"
+                        },
+                        "spec": {
+                            "containers": [
+                                {
+                                    "name": "telenorboost-container",
+                                    "resources": {}
+                                },
+                                {
+                                    "name": "input-transformer",
+                                    "image": "thorlar/telenor-transformer",
+                                    "resources": {}
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "replicas": 1,
+                "annotations": {
+                    "project.seldon.io/input-transformer": "default",
+                    "project.seldon.io/telenorboost-container": "default"
+                },
+                "engineResources": {},
+                "svcOrchSpec": {},
+                "traffic": 100
+            }
+        ],
+        "annotations": {
+            "seldon.io/engine-seldon-log-messages-externally": "true"
+        },
+        "protocol": "seldon"
+    },
+    "status": {}
+}
