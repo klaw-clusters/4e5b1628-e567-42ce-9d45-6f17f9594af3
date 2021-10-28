@@ -1,0 +1,60 @@
+{
+    "kind": "Service",
+    "apiVersion": "serving.knative.dev/v1",
+    "metadata": {
+        "name": "default-sd-income-classifier-outlier-cd",
+        "namespace": "default",
+        "creationTimestamp": null,
+        "labels": {
+            "seldon.io/deployment-kind": "SeldonDeployment",
+            "seldon.io/deployment-name": "income-classifier",
+            "seldon.io/deployment-namespace": "default",
+            "seldon.io/detector-name": "cd",
+            "seldon.io/detector-type": "outlier"
+        }
+    },
+    "spec": {
+        "template": {
+            "metadata": {
+                "creationTimestamp": null,
+                "labels": {
+                    "fluentd": "true",
+                    "seldon-deployment-id": "income-classifier",
+                    "seldon.io/outlier": "true"
+                }
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "name": "outlier-detector",
+                        "image": "seldonio/alibi-detect-server:1.11.2",
+                        "args": [
+                            "--model_name",
+                            "cd",
+                            "--http_port",
+                            "8080",
+                            "--protocol",
+                            "tensorflow.http",
+                            "--storage_uri",
+                            "dcdcd",
+                            "--reply_url",
+                            "http://seldon-request-logger.seldon-logs",
+                            "--event_type",
+                            "io.seldon.serving.inference.outlier",
+                            "--event_source",
+                            "io.seldon.serving.income-classifier-cd",
+                            "OutlierDetector",
+                            "--drift_batch_size",
+                            "1000"
+                        ],
+                        "resources": {},
+                        "securityContext": {
+                            "runAsUser": 8888
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "status": {}
+}
