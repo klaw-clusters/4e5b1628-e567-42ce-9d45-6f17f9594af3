@@ -36,7 +36,7 @@
                             "--protocol",
                             "tensorflow.http",
                             "--storage_uri",
-                            "gs://noitso-temp/retail-workshop/outlier_detector/",
+                            "gs://noitso/retail-workshop/models/outlier_detector",
                             "--reply_url",
                             "http://seldon-request-logger.seldon-logs",
                             "--event_type",
