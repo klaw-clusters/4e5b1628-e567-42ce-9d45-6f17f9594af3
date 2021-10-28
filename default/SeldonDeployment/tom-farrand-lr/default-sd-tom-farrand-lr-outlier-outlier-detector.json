@@ -1,0 +1,60 @@
+{
+    "kind": "Service",
+    "apiVersion": "serving.knative.dev/v1",
+    "metadata": {
+        "name": "default-sd-tom-farrand-lr-outlier-outlier-detector",
+        "namespace": "default",
+        "creationTimestamp": null,
+        "labels": {
+            "seldon.io/deployment-kind": "SeldonDeployment",
+            "seldon.io/deployment-name": "tom-farrand-lr",
+            "seldon.io/deployment-namespace": "default",
+            "seldon.io/detector-name": "outlier-detector",
+            "seldon.io/detector-type": "outlier"
+        }
+    },
+    "spec": {
+        "template": {
+            "metadata": {
+                "creationTimestamp": null,
+                "labels": {
+                    "fluentd": "true",
+                    "seldon-deployment-id": "tom-farrand-lr",
+                    "seldon.io/outlier": "true"
+                }
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "name": "outlier-detector",
+                        "image": "seldonio/alibi-detect-server:1.11.2",
+                        "args": [
+                            "--model_name",
+                            "outlier-detector",
+                            "--http_port",
+                            "8080",
+                            "--protocol",
+                            "tensorflow.http",
+                            "--storage_uri",
+                            "gs://noitso-temp/retail-workshop/outlier_detector/",
+                            "--reply_url",
+                            "http://seldon-request-logger.seldon-logs",
+                            "--event_type",
+                            "io.seldon.serving.inference.outlier",
+                            "--event_source",
+                            "io.seldon.serving.tom-farrand-lr-outlier-detector",
+                            "OutlierDetector",
+                            "--drift_batch_size",
+                            "1000"
+                        ],
+                        "resources": {},
+                        "securityContext": {
+                            "runAsUser": 8888
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "status": {}
+}
