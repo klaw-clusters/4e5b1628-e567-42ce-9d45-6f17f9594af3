@@ -43,7 +43,7 @@
                             "--protocol",
                             "seldon.http",
                             "--storage_uri",
-                            "!gsutil cp model.joblib gs://tom-seldon-examples/noitsu/drift_detector",
+                            "gs://tom-seldon-examples/noitsu/drift_detector",
                             "--reply_url",
                             "http://seldon-request-logger.seldon-logs",
                             "--event_type",
