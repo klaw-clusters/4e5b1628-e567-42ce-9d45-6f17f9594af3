@@ -1,0 +1,83 @@
+{
+    "kind": "Service",
+    "apiVersion": "serving.knative.dev/v1",
+    "metadata": {
+        "name": "prod-sd-scoreapi-drift-drift-testing",
+        "namespace": "prod",
+        "creationTimestamp": null,
+        "labels": {
+            "seldon.io/deployment-kind": "SeldonDeployment",
+            "seldon.io/deployment-name": "scoreapi",
+            "seldon.io/deployment-namespace": "prod",
+            "seldon.io/detector-name": "drift-testing",
+            "seldon.io/detector-type": "drift"
+        }
+    },
+    "spec": {
+        "template": {
+            "metadata": {
+                "creationTimestamp": null,
+                "labels": {
+                    "fluentd": "true",
+                    "seldon-deployment-id": "scoreapi",
+                    "seldon.io/drift": "true"
+                },
+                "annotations": {
+                    "autoscaling.knative.dev/maxScale": "1",
+                    "autoscaling.knative.dev/minScale": "1",
+                    "prometheus.io/path": "/v1/metrics",
+                    "prometheus.io/port": "8080",
+                    "prometheus.io/scrape": "true"
+                }
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "name": "drift-detector",
+                        "image": "seldonio/alibi-detect-server:1.11.2",
+                        "args": [
+                            "--model_name",
+                            "drift-testing",
+                            "--http_port",
+                            "8080",
+                            "--protocol",
+                            "seldon.http",
+                            "--storage_uri",
+                            "gs://noitso/models/generic/2021/application-b2c/cd",
+                            "--reply_url",
+                            "http://seldon-request-logger.seldon-logs.svc.cluster.local:80",
+                            "--event_type",
+                            "io.seldon.serving.inference.drift",
+                            "--event_source",
+                            "io.seldon.serving.scoreapi-drift-testing",
+                            "DriftDetector",
+                            "--drift_batch_size",
+                            "2"
+                        ],
+                        "ports": [
+                            {
+                                "containerPort": 8080,
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "env": [
+                            {
+                                "name": "SELDON_DEPLOYMENT_ID",
+                                "value": "scoreapi"
+                            },
+                            {
+                                "name": "SELDON_DEPLOYMENT_NAMESPACE",
+                                "value": "prod"
+                            }
+                        ],
+                        "resources": {},
+                        "securityContext": {
+                            "runAsUser": 8888
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "status": {}
+}
