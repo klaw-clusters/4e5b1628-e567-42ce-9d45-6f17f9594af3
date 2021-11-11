@@ -1,0 +1,60 @@
+{
+    "kind": "Service",
+    "apiVersion": "serving.knative.dev/v1",
+    "metadata": {
+        "name": "prod-sd-scoreapi-outlier-drift-testing",
+        "namespace": "prod",
+        "creationTimestamp": null,
+        "labels": {
+            "seldon.io/deployment-kind": "SeldonDeployment",
+            "seldon.io/deployment-name": "scoreapi",
+            "seldon.io/deployment-namespace": "prod",
+            "seldon.io/detector-name": "drift-testing",
+            "seldon.io/detector-type": "outlier"
+        }
+    },
+    "spec": {
+        "template": {
+            "metadata": {
+                "creationTimestamp": null,
+                "labels": {
+                    "fluentd": "true",
+                    "seldon-deployment-id": "scoreapi",
+                    "seldon.io/outlier": "true"
+                }
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "name": "outlier-detector",
+                        "image": "seldonio/alibi-detect-server:1.11.2",
+                        "args": [
+                            "--model_name",
+                            "drift-testing",
+                            "--http_port",
+                            "8080",
+                            "--protocol",
+                            "seldon.http",
+                            "--storage_uri",
+                            "gs://noitso/models/generic/2021/application-b2c/od",
+                            "--reply_url",
+                            "http://seldon-request-logger.seldon-logs.svc.cluster.local:80",
+                            "--event_type",
+                            "io.seldon.serving.inference.outlier",
+                            "--event_source",
+                            "io.seldon.serving.scoreapi-drift-testing",
+                            "OutlierDetector",
+                            "--drift_batch_size",
+                            "2"
+                        ],
+                        "resources": {},
+                        "securityContext": {
+                            "runAsUser": 8888
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "status": {}
+}
