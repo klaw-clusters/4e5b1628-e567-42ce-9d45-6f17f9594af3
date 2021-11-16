@@ -41,7 +41,7 @@
                             "--http_port",
                             "8080",
                             "--protocol",
-                            "tensorflow.http",
+                            "seldon.http",
                             "--storage_uri",
                             "gs://seldon-models/alibi-detect/cd/tabular/income-0_7_0/",
                             "--reply_url",
@@ -52,7 +52,7 @@
                             "io.seldon.serving.income50k-example-tabulardetector",
                             "DriftDetector",
                             "--drift_batch_size",
-                            "1000"
+                            "200"
                         ],
                         "ports": [
                             {
